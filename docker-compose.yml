@@ -1,0 +1,23 @@
+version: '3'
+services:
+  proxy:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - sintaxify
+      - eagraphy
+
+  sintaxify:
+    build:
+      context: ./Sintaxify
+    ports:
+      - "8000:80"  # Map external port 8000 to Nginx's port 80 inside the container
+
+  eagraphy:
+    build:
+      context: ./EA_Grafty
+    ports:
+      - "8001:3000"  # Map external port 8001 to internal port 3000
